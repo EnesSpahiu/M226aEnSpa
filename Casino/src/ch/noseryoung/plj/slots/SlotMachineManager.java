@@ -1,11 +1,7 @@
-package ch.noseryoung.plj.Slots;
+package ch.noseryoung.plj.slots;
 
-import ch.noseryoung.plj.Slots.IO;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class SlotMachineManager {
 
@@ -31,14 +27,14 @@ public class SlotMachineManager {
 
     public void starter(){
 
-        String answer = " ";
+        int answer = 0;
 
-        money = io.chooseAmount();
         answer = io.spinAnswer();
 
-        if (answer.toLowerCase().equals("s")){
+        if (answer == 1){
+            money = io.chooseAmount();
             spin();
-        }else if (answer.toLowerCase().equals("b")){
+        }else if (answer == 2){
             money = 0;
         }
     }
@@ -49,19 +45,18 @@ public class SlotMachineManager {
             System.out.print(winningVals.get(rand.nextInt(8)) + " " +
                     winningVals.get(rand.nextInt(8)) + " " + winningVals.get(rand.nextInt(8)));
             try {
-                Thread.sleep(30);
+                Thread.sleep(50);
             } catch (InterruptedException e) {
             }
-            System.out.print("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+            System.out.print("\b".repeat(50));
         }
 
         for (int i = 0; i < winningNums.length; i++) {
             winningNums[i] = rand.nextInt(7 + 1);
             System.out.print(winningVals.get(winningNums[i]) + " ");
         }
-
+        System.out.println();
         checkSlots();
-
     }
 
     public void checkSlots(){
@@ -74,6 +69,8 @@ public class SlotMachineManager {
                     System.out.println("You Won");
                     money *= 2;
                     System.out.println("You won " + money);
+                } else {
+                    System.out.println("You lost");
                 }
             } catch (IndexOutOfBoundsException e){
             }

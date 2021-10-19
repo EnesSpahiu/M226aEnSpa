@@ -1,4 +1,4 @@
-package ch.noseryoung.plj.Roulette;
+package ch.noseryoung.plj.roulette;
 
 public class Number {
 

@@ -1,38 +1,42 @@
-package ch.noseryoung.plj.Blackjack;
+package ch.noseryoung.plj.blackjack;
 
 import java.util.Random;
 import java.util.Scanner;
 
-public class Blackjack {
+public class BlackjackManager {
 
     Scanner sc = new Scanner(System.in);
 
-    private int valueCustomer;
+    IO io = new IO();
+
     private int valueDealer;
+    private int valueCustomer;
+
+    public void starter(){
+
+        int answer = 0;
+
+            while (answer != 2) {
+                if ((answer = io.playGame()) == 2)
+                    continue;
+                io.betMoney();
+                customerDrawCard();
+                dealerDrawCard();
+            }
+    }
 
     public void compareDealerCostumer(){
-
         if (valueCustomer > valueDealer && valueCustomer <= 21){
             System.out.println("You won");
-            System.exit(1);
         } else if (valueCustomer < valueDealer && valueDealer <= 21){
             System.out.println("You lost");
-            System.exit(1);
         } else if (valueCustomer > 21){
-
             System.out.println("You lost");
-
         } else if (valueDealer > 21){
-
-            System.out.println("You win");
-
+            System.out.println("You won");
         }else {
             System.out.println("It's a draw");
-            System.exit(1);
         }
-
-        System.exit(1);
-
     }
 
     public int drawCard(){
@@ -51,7 +55,7 @@ public class Blackjack {
         return value;
     }
 
-    public int startGame() {
+    public int startCards() {
 
         int card = 0;
         int card2 = 0;
@@ -66,9 +70,9 @@ public class Blackjack {
         return value;
     }
 
-    public int costumerDrawCard() {
+    public int customerDrawCard() {
 
-        valueCustomer = startGame();
+        valueCustomer = startCards();
         char drawCard = ' ';
         float purse = 0;
 
@@ -87,7 +91,6 @@ public class Blackjack {
                 }
             } else if (valueCustomer > 21){
                 System.out.println("You lost");
-                System.exit(1);
             }
         }
         return valueCustomer;
@@ -95,13 +98,12 @@ public class Blackjack {
 
     public int dealerDrawCard() {
 
-        valueDealer = startGame();
+        valueDealer = startCards();
 
         System.out.println("Dealer has: " + valueDealer);
 
-        for (int i = 0; i < 100; i++) {
+        while (true) {
             if (valueDealer >= 17) {
-                System.out.println("The Dealer got: " + valueDealer);
                 compareDealerCostumer();
                 break;
             } else if (valueDealer < 17) {
@@ -112,7 +114,6 @@ public class Blackjack {
                 break;
             } else if (valueDealer > 21) {
                 System.out.println("The Dealer got more than 21, you won");
-                System.exit(1);
             }
         }
 
@@ -120,15 +121,9 @@ public class Blackjack {
     }
 
     public void blackJack(int card1, int card2){
-
-
         if (card1 == 1 && card2 == 10 || card1 == 10 && card2 == 1){
-
             System.out.println("That's 21 so the game is over");
-            System.exit(1);
-
         }
-
     }
 
 }

@@ -1,34 +1,37 @@
-package ch.noseryoung.plj.Roulette;
+package ch.noseryoung.plj.roulette;
+
+import ch.noseryoung.plj.roulette.Color;
+import ch.noseryoung.plj.roulette.IO;
+import ch.noseryoung.plj.roulette.Roulette;
 
 public class RouletteManager {
 
     IO io = new IO();
     Roulette roulette = new Roulette();
 
-    private String answer;
-
     public void chooseBet() {
-        do {
-            String answer = io.choseBet();
-            if (answer.toLowerCase().equals("i")) {
+
+        int answer = 0;
+
+        while (true) {
+            answer = io.choseBet();
+            if (answer == 1) {
                 innerBet();
-            } else if (answer.toLowerCase().equals("o")) {
+            } else if (answer == 2) {
                 outerBet();
-            } else {
-                System.exit(1);
+            }else if (answer == 3){
+                break;
             }
-        } while (!answer.toLowerCase().equals("i") || !answer.toLowerCase().equals("o"));
+        }
 
     }
 
     public void innerBet() {
-
         int bet = io.innerBet();
 
         switch (bet) {
             case 1 -> checkStraightUp();
         }
-
     }
 
     public void outerBet() {
@@ -48,7 +51,9 @@ public class RouletteManager {
 
     public void checkRedOrBlack() {
 
-        do {
+        String answer = " ";
+
+        while (true){
             answer = io.redOrBlack();
 
             if (answer.toLowerCase().equals("r")) {
@@ -73,56 +78,58 @@ public class RouletteManager {
                 }
             }
 
-            if (!answer.toLowerCase().equals("r") || !answer.toLowerCase().equals("b")) {
-                System.out.println("Wrong Input");
-            }
-        } while (!answer.toLowerCase().equals("r") || !answer.toLowerCase().equals("b"));
+            System.out.println("Wrong Input");
+        }
     }
 
     public void checkEvenOrOdd() {
 
-        do {
+        String answer = " ";
+
+        while (true){
             answer = io.evenOrOdd();
 
             if (answer.toLowerCase().equals("e")) {
                 if (roulette.getWinningNum().getNum() % 2 == 0) {
                     System.out.println("Congratulations you won");
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
+                    break;
                 } else {
                     System.out.println("You lost this round.");
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
+                    break;
                 }
             } else if (answer.toLowerCase().equals("o")) {
                 if (roulette.getWinningNum().getNum() % 2 == 1) {
                     System.out.println("Congratulations you won");
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
+                    break;
                 } else {
                     System.out.println("You lost this round.");
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
+                    break;
                 }
             }
 
-            if (!answer.toLowerCase().equals("e") || !answer.toLowerCase().equals("o")) {
                 System.out.println("Wrong Input");
-            }
-        } while (!answer.toLowerCase().equals("e") || !answer.toLowerCase().equals("o"));
+        }
     }
 
     public void checkHalfHalf() {
 
-        do {
+        String answer = " ";
+
+        while (true) {
             answer = io.halfHalf();
 
             if (answer.toLowerCase().equals("h")) {
                 if (roulette.getWinningNum().getNum() >= 19 && roulette.getWinningNum().getNum() <= 36) {
                     System.out.println("Congratulations you won");
-                    System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
-                    break;
                 } else {
                     System.out.println("You lost this round.");
-                    System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
-                    break;
                 }
+                System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
+                break;
             } else if (answer.toLowerCase().equals("l")) {
                 if (roulette.getWinningNum().getNum() >= 1 && roulette.getWinningNum().getNum() <= 18) {
                     System.out.println("Congratulations you won");
@@ -135,47 +142,52 @@ public class RouletteManager {
                 }
             }
 
-            if (!answer.toLowerCase().equals("h") || !answer.toLowerCase().equals("l")) {
                 System.out.println("Wrong Input");
-            }
-        } while (!answer.toLowerCase().equals("h") || !answer.toLowerCase().equals("l"));
+        }
     }
 
     public void checkThird() {
 
-        do {
+        String answer = " ";
+
+        while (true) {
             answer = io.third();
 
-            if (answer.toLowerCase().equals("h")) {
-                if (roulette.getWinningNum().getNum() >= 25 && roulette.getWinningNum().getNum() <= 36) {
-                    System.out.println("Congratulations you won");
-                    System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
-                } else {
-                    System.out.println("You lost this round.");
-                    System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
-                }
-            } else if (answer.toLowerCase().equals("m")) {
-                if (roulette.getWinningNum().getNum() >= 13 && roulette.getWinningNum().getNum() <= 24) {
-                    System.out.println("Congratulations you won");
-                    System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
-                } else {
-                    System.out.println("You lost this round.");
-                    System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
-                }
-            } else if (answer.toLowerCase().equals("l")) {
-                if (roulette.getWinningNum().getNum() >= 1 && roulette.getWinningNum().getNum() <= 12) {
-                    System.out.println("Congratulations you won");
-                    System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
-                } else {
-                    System.out.println("You lost this round.");
-                    System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
-                }
+            switch (answer.toLowerCase()) {
+                case "h":
+                    if (roulette.getWinningNum().getNum() >= 25 && roulette.getWinningNum().getNum() <= 36) {
+                        System.out.println("Congratulations you won");
+                        System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
+                        break;
+                    } else {
+                        System.out.println("You lost this round.");
+                        System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
+                        break;
+                    }
+                case "m":
+                    if (roulette.getWinningNum().getNum() >= 13 && roulette.getWinningNum().getNum() <= 24) {
+                        System.out.println("Congratulations you won");
+                        System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
+                        break;
+                    } else {
+                        System.out.println("You lost this round.");
+                        System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
+                        break;
+                    }
+                case "l":
+                    if (roulette.getWinningNum().getNum() >= 1 && roulette.getWinningNum().getNum() <= 12) {
+                        System.out.println("Congratulations you won");
+                        System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
+                        break;
+                    } else {
+                        System.out.println("You lost this round.");
+                        System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
+                        break;
+                    }
             }
 
-            if (!answer.toLowerCase().equals("h") || !answer.toLowerCase().equals("m") || !answer.toLowerCase().equals("l")) {
                 System.out.println("Wrong Input");
-            }
-        } while (!answer.toLowerCase().equals("h") || !answer.toLowerCase().equals("m") || !answer.toLowerCase().equals("l"));
+        }
     }
 
     public void checkStraightUp() {
