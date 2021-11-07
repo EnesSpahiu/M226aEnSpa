@@ -1,19 +1,19 @@
 package ch.noseryoung.plj.roulette;
 
-import ch.noseryoung.plj.roulette.Roulette;
+import ch.noseryoung.plj.User;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
-public class IO {
-
-    Roulette roulette = new Roulette();
+public class IO_Roulette {
 
     Scanner sc = new Scanner(System.in);
+    User user;
 
-    public int choseBet() {
+    public int starter() {
 
         int answer = 0;
         boolean errorOccurred = true;
@@ -25,10 +25,13 @@ public class IO {
                 drawBox(40, "3. End Game ");
                 answer = sc.nextInt();
                 sc.nextLine();
+                if (answer >= 1 && answer <= 3)
+                    errorOccurred = true;
                 errorOccurred = false;
             }catch (NumberFormatException | InputMismatchException e){
                 System.out.println("Wrong Input");
                 errorOccurred = true;
+                sc.nextLine();
             }
         }
 
@@ -51,6 +54,7 @@ public class IO {
             }catch (NumberFormatException | InputMismatchException e){
                 System.out.println("Wrong Input");
                 errorOccurred = true;
+                sc.nextLine();
             }
         }
 
@@ -82,6 +86,33 @@ public class IO {
         return answer;
     }
 
+    public double getBetAmount() {
+        double bet = 0;
+
+        boolean errorOccurred = true;
+
+        while (errorOccurred) {
+            try {
+                System.out.println("Type in the amount you want to bet");
+                bet = sc.nextDouble();
+                sc.nextLine();
+                if (bet > user.getMoney()){
+                    System.out.println("You do not have that amount of money");
+                    errorOccurred = true;
+                    System.out.println("You have " + user.getMoney());
+                }else {
+                    errorOccurred = false;
+                }
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println("Wrong Input");
+                errorOccurred = true;
+                sc.nextLine();
+            }
+        }
+
+        return bet;
+    }
+
     public String redOrBlack() {
         drawBox(40, "Red Numbers (Type R)");
         drawBox(40, "Black Numbers (Type B)");
@@ -107,11 +138,12 @@ public class IO {
         return sc.nextLine();
     }
 
-    public ArrayList<Integer> straightUpBet() {
+    public ArrayList<Bet> straightUpBet() {
 
         String answer = "";
-        ArrayList<Integer> nums = new ArrayList();
+        ArrayList<Bet> betOnNum = new ArrayList<>();
         int num = 0;
+        double bet = 0;
 
         for (int i = 0; i < 6; i++) {
 
@@ -121,6 +153,18 @@ public class IO {
                 boolean errorOccurred = true;
 
                 while (errorOccurred){
+
+                    try{
+                        System.out.println("How much do you want to bet: ");
+                        bet = sc.nextDouble();
+                        sc.nextLine();
+                        errorOccurred = false;
+                    }catch (InputMismatchException e){
+                        System.out.println("Wrong Input");
+                        sc.nextLine();
+                        errorOccurred = true;
+                    }
+
                     try {
                         System.out.println("Which number do you want to pick (Max 6 -> between 0 and 36): ");
                         num = sc.nextInt();
@@ -128,19 +172,21 @@ public class IO {
                         errorOccurred = false;
                     }catch (InputMismatchException e){
                         System.out.println("Wrong Input");
+                        sc.nextLine();
                         errorOccurred = true;
                     }
 
                 if (num > 36 || num < 0) {
                     System.out.println("Wrong Input");
                     errorOccurred = true;
-                    sc.nextLine();
                 }
             }
 
-            nums.add(num);
+            betOnNum.add(new Bet(num, bet));
 
-            while (!answer.toLowerCase().equals("n")) {
+                answer = "y";
+
+            while (!answer.toLowerCase().equals("n") && answer.toLowerCase().equals("y")) {
                 System.out.println("Do you want to stop picking numbers? (Y/N) ");
                 answer = sc.nextLine();
 
@@ -148,15 +194,23 @@ public class IO {
                     break;
                 } else if (answer.toLowerCase().equals("n")){
                     continue;
-                }
-                else {
+                } else {
                     System.out.println("Wrong Input");
                 }
 
             }
         }
-        return nums;
+        return betOnNum;
     }
+
+    /**
+     * Method: drawBox
+     *
+     * Function: Prints out a box around the output so it looks a little better
+     *
+     * @param length -> Determines how big the box is gonna be
+     * @param singleWord -> The Word that is going to get printed out
+     */
     public static void drawBox(int length, String singleWord){
 
         if (singleWord.length() > length){
@@ -193,5 +247,9 @@ public class IO {
             System.out.print("\u2550");
         }
         System.out.print("\u255D\n");
+    }
+
+    public void setUser(User user){
+        this.user = user;
     }
 }

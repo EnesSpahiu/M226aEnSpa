@@ -4,17 +4,23 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Class: Roulette
+ *
+ * Function: Holds the winning number and sets it,
+ * aswell the ArrayList of Numbers on the table
+ */
 public class Roulette {
-
-    Scanner sc = new Scanner(System.in);
-
-    Number number = new Number();
 
     private ArrayList<Number> nums = new ArrayList();
     private Number winningNum;
 
+    /**
+     * Constructor: Roulette
+     *
+     * Function: Fills up ArrayList nums and sets winning number
+     */
     public Roulette() {
-
         nums.add(new Number(Color.GREEN, 0));
         nums.add(new Number(Color.RED, 1));
         nums.add(new Number(Color.BLACK, 2));
@@ -52,8 +58,6 @@ public class Roulette {
         nums.add(new Number(Color.RED, 34));
         nums.add(new Number(Color.BLACK, 35));
         nums.add(new Number(Color.RED, 36));
-
-        setWinningNum(nums.get(ThreadLocalRandom.current().nextInt(0, 36 + 1)));
     }
 
     public ArrayList<Number> getNums() {

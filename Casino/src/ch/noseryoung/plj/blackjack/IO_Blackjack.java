@@ -1,12 +1,24 @@
 package ch.noseryoung.plj.blackjack;
 
+import ch.noseryoung.plj.User;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class IO {
+public class IO_Blackjack {
 
     Scanner sc = new Scanner(System.in);
+    User user;
 
+    /**
+     * Method: playGame
+     *
+     * Function: Prints out the options of the user and gets his input while
+     * trying to catch an InputMissmatchException so the user can not type in
+     * false inputs.
+     *
+     * @return answer -> Contains the answer what the user wants to do
+     */
     public int playGame(){
 
         int answer = 0;
@@ -16,7 +28,8 @@ public class IO {
             try {
                 drawBox(40, "1. Play ");
                 drawBox(40, "2. End game ");
-                answer = Integer.parseInt(sc.nextLine());
+                answer = sc.nextInt();
+                sc.nextLine();
                 errorOccurred = false;
             }catch (NumberFormatException | InputMismatchException e){
                 System.out.println("Wrong Input");
@@ -27,24 +40,44 @@ public class IO {
         return answer;
     }
 
-    public int betMoney(){
-        int money = 0;
-        boolean errorOccurred = false;
+    /**
+     * Method: betMoney
+     *
+     * Function: Ask the user how much money he wants to bet and return it
+     *
+     * @return money -> Returns the amount of money the user is going to bet
+     */
+    public double betMoney(){
+        double money = 0;
+        boolean errorOccurred = true;
 
-        do {
+        while (errorOccurred){
             try {
                 System.out.println("Type in the amount you want to bet: ");
-                money = Integer.parseInt(sc.nextLine());
+                money = sc.nextDouble();
+                sc.nextLine();
+                if (money >= user.getMoney()){
+                    System.out.println("You do not have that amount of money");
+                    errorOccurred = true;
+                }
                 errorOccurred = false;
             }catch (NumberFormatException | InputMismatchException e){
                 System.out.println("Wrong Input");
                 errorOccurred = true;
                 sc.nextLine();
             }
-        }while(errorOccurred);
+        };
         return money;
     }
 
+    /**
+     * Method: drawBox
+     *
+     * Function: Prints out a box around the output so it looks a little better
+     *
+     * @param length -> Determines how big the box is gonna be
+     * @param singleWord -> The Word that is going to get printed out
+     */
     public static void drawBox(int length, String singleWord){
 
         if (singleWord.length() > length){
@@ -92,6 +125,10 @@ public class IO {
 
         System.out.print("\u255D\n");
 
+    }
+
+    public void setUser(User user){
+        this.user = user;
     }
 
 }

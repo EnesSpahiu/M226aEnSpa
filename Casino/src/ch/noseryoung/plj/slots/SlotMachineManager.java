@@ -1,17 +1,30 @@
 package ch.noseryoung.plj.slots;
 
+import ch.noseryoung.plj.User;
+
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * Class: SlotMachineManager
+ *
+ * Function: Manages the return Values from IO_Slots
+ */
 public class SlotMachineManager {
 
     Random rand = new Random();
-    IO io = new IO();
+    IO_Slots io = new IO_Slots();
+    User user = new User();
 
     private int[] winningNums = new int[3];
     private HashMap<Integer, String> winningVals = new HashMap();
-    private int money;
+    private double money;
 
+    /**
+     * Constructor: SlotMachineManager
+     *
+     * Function: Fills up HashMap when it gets builded
+     */
     public SlotMachineManager() {
 
         winningVals.put(0, "🍉");
@@ -25,9 +38,16 @@ public class SlotMachineManager {
 
     }
 
+    /**
+     * Method: starter
+     *
+     * Function: Calls method depending on return from ioSlots.spinAnswer method
+     */
     public void starter(){
 
         int answer = 0;
+
+        io.setUser(user);
 
         answer = io.spinAnswer();
 
@@ -39,6 +59,13 @@ public class SlotMachineManager {
         }
     }
 
+    /**
+     * Method: spin
+     *
+     * Function: Generates random numbers in the bound of the HashMap keys and then gets
+     * their value and prints it aut. It also lets the thread sleep for 50 seconds and
+     * then makes some '\b' so it simulates a spin
+     */
     public void spin(){
         for (int i = 0; i < 100; i++) {
 
@@ -59,21 +86,34 @@ public class SlotMachineManager {
         checkSlots();
     }
 
+    /**
+     * Method: checkSlots
+     *
+     * Function: Checks if the user won or not and also tries to catch an
+     * IndexOutOfBoundsException
+     */
     public void checkSlots(){
-
-        int tmp = 0;
 
         for (int i = 0; i < winningNums.length; i++) {
             try {
                 if (winningNums[i] == winningNums[i + 1] && winningNums[i] == winningNums[i + 2]){
-                    System.out.println("You Won");
-                    money *= 2;
-                    System.out.println("You won " + money);
+                    System.out.println("You Won this round");
+                    money *= 50;
+                    System.out.println("You won: " + money);
+                    user.setMoney(user.getMoney() + money);
+                    break;
                 } else {
-                    System.out.println("You lost");
+                    System.out.println("You lost this round");
+                    System.out.println("You lost: " + money);
+                    user.setMoney(user.getMoney() + money);
+                    break;
                 }
             } catch (IndexOutOfBoundsException e){
             }
         }
+    }
+
+    public void setUser(User user){
+        this.user = user;
     }
 }

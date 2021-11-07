@@ -1,0 +1,16 @@
+version: "3.9"
+    
+services:
+    userDB:
+        image: mariadb
+        container_name: db
+        volumes:
+            - ./userDB/:/var/lib/mysql
+        restart: on-failure
+        environment:
+            MYSQL_ROOT_PASSWORD: rootpw
+            MYSQL_DATABASE: casino
+            MYSQL_USER: stduser
+            MYSQL_PASSWORD: pwd
+        ports:
+          - "3306:3306"
