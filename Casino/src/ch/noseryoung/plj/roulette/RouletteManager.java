@@ -1,5 +1,6 @@
 package ch.noseryoung.plj.roulette;
 
+import ch.noseryoung.plj.DatabaseConnection;
 import ch.noseryoung.plj.User;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class RouletteManager {
 
     IO_Roulette io = new IO_Roulette();
     Roulette roulette = new Roulette();
-    User user = new User();
+    User user;
 
     /**
      * Method starter
@@ -97,12 +98,13 @@ public class RouletteManager {
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
                     wonAmount = betAmount * 2;
                     System.out.println("You won: " + wonAmount);
+                    user.setMoney(user.getMoney() + wonAmount);
                 } else {
                     System.out.println("You lost this round.");
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
                     System.out.println("You lost: " + betAmount);
+                    user.setMoney(user.getMoney() - betAmount);
                 }
-                user.setMoney(user.getMoney() + wonAmount);
                 break;
             } else if (answer.toLowerCase().equals("b")) {
                 if (roulette.getWinningNum().getColor().equals(Color.BLACK)) {
@@ -110,12 +112,13 @@ public class RouletteManager {
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
                     wonAmount = betAmount * 2;
                     System.out.println("You won: " + wonAmount);
+                    user.setMoney(user.getMoney() + wonAmount);
                 } else {
                     System.out.println("You lost this round.");
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
                     System.out.println("You lost: " + betAmount);
+                    user.setMoney(user.getMoney() - betAmount);
                 }
-                user.setMoney(user.getMoney() + wonAmount);
                 break;
             }
 
@@ -144,12 +147,13 @@ public class RouletteManager {
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
                     wonAmount = betAmount * 2;
                     System.out.println("You won: " + wonAmount);
+                    user.setMoney(user.getMoney() + wonAmount);
                 } else {
                     System.out.println("You lost this round.");
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
                     System.out.println("You lost: " + betAmount);
+                    user.setMoney(user.getMoney() - betAmount);
                 }
-                user.setMoney(user.getMoney() + wonAmount);
                 break;
             } else if (answer.toLowerCase().equals("o")) {
                 if (roulette.getWinningNum().getNum() % 2 == 1) {
@@ -157,12 +161,13 @@ public class RouletteManager {
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
                     wonAmount = betAmount * 2;
                     System.out.println("You won: " + wonAmount);
+                    user.setMoney(user.getMoney() + wonAmount);
                 } else {
                     System.out.println("You lost this round.");
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
                     System.out.println("You lost: " + betAmount);
+                    user.setMoney(user.getMoney() - betAmount);
                 }
-                user.setMoney(user.getMoney() + wonAmount);
                 break;
             }
 
@@ -191,12 +196,13 @@ public class RouletteManager {
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
                     wonAmount = betAmount * 2;
                     System.out.println("You won: " + wonAmount);
+                    user.setMoney(user.getMoney() + wonAmount);
                 } else {
                     System.out.println("You lost this round.");
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
                     System.out.println("You lost: " + betAmount);
+                    user.setMoney(user.getMoney() - betAmount);
                 }
-                user.setMoney(user.getMoney() + wonAmount);
                 break;
             } else if (answer.toLowerCase().equals("l")) {
                 if (roulette.getWinningNum().getNum() >= 1 && roulette.getWinningNum().getNum() <= 18) {
@@ -204,12 +210,13 @@ public class RouletteManager {
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
                     wonAmount = betAmount * 2;
                     System.out.println("You won: " + wonAmount);
+                    user.setMoney(user.getMoney() + wonAmount);
                 } else {
                     System.out.println("You lost this round.");
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
                     System.out.println("You lost: " + betAmount);
+                    user.setMoney(user.getMoney() - betAmount);
                 }
-                user.setMoney(user.getMoney() + wonAmount);
                 break;
             }
 
@@ -238,12 +245,14 @@ public class RouletteManager {
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
                     wonAmount = betAmount * 3;
                     System.out.println("You won: " + wonAmount);
+                    user.setMoney(user.getMoney() + wonAmount);
                 } else {
                     System.out.println("You lost this round.");
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
                     System.out.println("You lost: " + betAmount);
+                    user.setMoney(user.getMoney() - betAmount);
                 }
-                user.setMoney(user.getMoney() + wonAmount);
+
                 break;
             }
             if (answer.toLowerCase().equals("m")) {
@@ -252,12 +261,13 @@ public class RouletteManager {
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
                     wonAmount = betAmount * 3;
                     System.out.println("You won: " + wonAmount);
+                    user.setMoney(user.getMoney() + wonAmount);
                 } else {
                     System.out.println("You lost this round.");
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
                     System.out.println("You lost: " + betAmount);
+                    user.setMoney(user.getMoney() - betAmount);
                 }
-                user.setMoney(user.getMoney() + wonAmount);
                 break;
             }
             if (answer.toLowerCase().equals("l")) {
@@ -266,12 +276,13 @@ public class RouletteManager {
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
                     wonAmount = betAmount * 3;
                     System.out.println("You won: " + wonAmount);
+                    user.setMoney(user.getMoney() + wonAmount);
                 } else {
                     System.out.println("You lost this round.");
                     System.out.println("The Winning number is " + roulette.getWinningNum().getColor() + " " + roulette.getWinningNum().getNum());
                     System.out.println("You lost: " + betAmount);
+                    user.setMoney(user.getMoney() - betAmount);
                 }
-                user.setMoney(user.getMoney() + wonAmount);
                 break;
             }
             System.out.println("Wrong Input");
@@ -314,17 +325,20 @@ public class RouletteManager {
             System.out.println("The Winning number is " + roulette.getWinningNum().getNum());
             System.out.println("You won: " + wonAmount);
             System.out.println("You betted: " + allAmount);
+            user.setMoney(user.getMoney() + wonAmount);
             if (lostAmount > 0) {
                 System.out.println("For all bets you lost: " + lostAmount);
+                user.setMoney(user.getMoney() - lostAmount);
             }
         } else {
             System.out.println("You lost this round.");
             System.out.println("The Winning number is " + roulette.getWinningNum().getNum());
             System.out.println("You lost: " + lostAmount);
             System.out.println("You betted: " + allAmount);
+            user.setMoney(user.getMoney() - lostAmount);
         }
 
-        user.setMoney(user.getMoney() + wonAmount);
+
     }
 
     public void setUser(User user){

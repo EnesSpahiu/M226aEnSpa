@@ -1,5 +1,6 @@
 package ch.noseryoung.plj.blackjack;
 
+import ch.noseryoung.plj.DatabaseConnection;
 import ch.noseryoung.plj.User;
 
 import java.util.Random;
@@ -10,7 +11,7 @@ public class BlackjackManager {
     Scanner sc = new Scanner(System.in);
 
     IO_Blackjack io = new IO_Blackjack();
-    User user = new User();
+    User user;
 
     private int valueDealer;
     private int valueCustomer;
@@ -50,21 +51,23 @@ public class BlackjackManager {
             System.out.println("You won this game");
             betAmount *= 2;
             System.out.println("You won: " + betAmount);
+            user.setMoney(user.getMoney() + betAmount);
         } else if (valueCustomer < valueDealer && valueDealer <= 21) {
             System.out.println("You lost this game");
             System.out.println("You lost: " + betAmount);
-
+            user.setMoney(user.getMoney() - betAmount);
         } else if (valueCustomer > 21) {
             System.out.println("You lost this game");
             System.out.println("You lost: " + betAmount);
+            user.setMoney(user.getMoney() - betAmount);
         } else if (valueDealer > 21) {
             System.out.println("You won this game");
             betAmount *= 2;
             System.out.println("You won: " + betAmount);
+            user.setMoney(user.getMoney() + betAmount);
         } else {
             System.out.println("It's a draw");
         }
-        user.setMoney(user.getMoney() + betAmount);
     }
 
     /**
@@ -142,6 +145,7 @@ public class BlackjackManager {
             } else if (valueCustomer > 21) {
                 drawCard = "l";
                 System.out.println("You lost");
+                user.setMoney(user.getMoney() - betAmount);
                 break;
             }
         }
@@ -170,11 +174,13 @@ public class BlackjackManager {
             } else if (valueDealer == 21) {
                 System.out.println("The Dealer got 21, you lost");
                 System.out.println("You lost: " + betAmount);
+                user.setMoney(user.getMoney() - betAmount);
                 break;
             } else if (valueDealer > 21) {
                 System.out.println("The Dealer got more than 21, you won");
                 betAmount *= 2;
                 System.out.println("You won: " + betAmount);
+                user.setMoney(user.getMoney() + betAmount);
                 break;
             }
         }
@@ -192,7 +198,9 @@ public class BlackjackManager {
      */
     public void blackJack(int card1, int card2) {
         if (card1 == 1 && card2 == 10 || card1 == 10 && card2 == 1) {
+            betAmount *= 3;
             System.out.println("That's 21 so the game is over");
+            user.setMoney(user.getMoney() + betAmount);
         }
     }
 

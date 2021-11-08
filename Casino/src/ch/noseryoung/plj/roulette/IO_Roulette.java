@@ -1,5 +1,6 @@
 package ch.noseryoung.plj.roulette;
 
+import ch.noseryoung.plj.DatabaseConnection;
 import ch.noseryoung.plj.User;
 
 import java.util.ArrayList;

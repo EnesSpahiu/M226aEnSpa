@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class IO_Slots {
 
     Scanner sc = new Scanner(System.in);
-    User user = new User();
+    User user;
 
     /**
      * Method: chooseAmount
@@ -32,11 +32,13 @@ public class IO_Slots {
                 System.out.println("Type in the amount you want to bet: ");
                 money = sc.nextDouble();
                 sc.nextLine();
-                if (money >= user.getMoney()){
+                if (money > user.getMoney()){
                     System.out.println("You do not have that amount of money");
                     errorOccurred = true;
+                    System.out.println("You have " + user.getMoney());
+                }else {
+                    errorOccurred = false;
                 }
-                errorOccurred = false;
             }catch (NumberFormatException | InputMismatchException e){
                 System.out.println("Wrong Input");
                 errorOccurred = true;

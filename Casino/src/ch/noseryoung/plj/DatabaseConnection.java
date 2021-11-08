@@ -22,7 +22,7 @@ public class DatabaseConnection {
     public void testConnection() {
         try {
             connection = DriverManager.getConnection(URL, userName, password);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -135,52 +135,62 @@ public class DatabaseConnection {
     }
 
     public boolean loginUser() {
-        int counter = 0;
         boolean isLoggedIn = false;
-        String output = "";
+        boolean wantsToStop = false;
         String firstName = " ";
         String lastName = " ";
         String pwd = " ";
-        ArrayList<User> users = new ArrayList<>();
-        Connection con = null;
-        Statement stmt = null;
-        ResultSet rs = null;
+        ArrayList<User> users;
 
         users = getData();
 
-        while (!isLoggedIn) {
-            System.out.println("Type in first name of Account: (Look out for Capital letters)");
-            firstName = sc.nextLine();
+        try{
+            while (!isLoggedIn) {
+                System.out.println("Type in first name of Account or (s) to stop: (Look out for Capital letters)");
+                firstName = sc.nextLine();
 
-            System.out.println("Type in last name of Account: (Look out for Capital letters)");
-            lastName = sc.nextLine();
-
-            System.out.println("Type in password of Account: (Look out for Capital letters)");
-            pwd = sc.nextLine();
-
-            for (int i = 0; i < users.size(); i++) {
-                if (users.get(i).getFirstName().equals(firstName) && users.get(i).getLastName().equals(lastName) && users.get(i).getPassword().equals(pwd)) {
-                    isLoggedIn = true;
-                    user = new User(users.get(i).getFirstName(), users.get(i).getLastName(), users.get(i).getMoney(), users.get(i).getPassword());
-
-                    user.setFirstName(users.get(i).getFirstName());
-                    user.setLastName(users.get(i).getLastName());
-                    user.setMoney(users.get(i).getMoney());
-                    user.setPassword(users.get(i).getPassword());
-
-                    System.out.println(users.get(i).getMoney());
+                if (firstName.toLowerCase().equals("s")){
                     break;
-                } else {
-                    isLoggedIn = false;
+                }
+
+                System.out.println("Type in last name of Account or (s) to stop: (Look out for Capital letters)");
+                lastName = sc.nextLine();
+
+                if (lastName.toLowerCase().equals("s")){
+                    break;
+                }
+
+                System.out.println("Type in password of Account or (s) to stop: (Look out for Capital letters)");
+                pwd = sc.nextLine();
+
+                if (pwd.toLowerCase().equals("s")){
+                    break;
+                }
+
+                for (int i = 0; i < users.size(); i++) {
+                    if (users.get(i).getFirstName().equals(firstName) && users.get(i).getLastName().equals(lastName) && users.get(i).getPassword().equals(pwd)) {
+                        isLoggedIn = true;
+                        user = new User(users.get(i).getFirstName(), users.get(i).getLastName(), users.get(i).getMoney(), users.get(i).getPassword());
+
+                        user.setFirstName(users.get(i).getFirstName());
+                        user.setLastName(users.get(i).getLastName());
+                        user.setMoney(users.get(i).getMoney());
+                        user.setPassword(users.get(i).getPassword());
+
+                        System.out.println(users.get(i).getMoney());
+                        break;
+                    } else {
+                        isLoggedIn = false;
+                    }
+                }
+                if (isLoggedIn){
+                    System.out.println("Successfully logged in");
+                }else {
+                    System.out.println("There is no such user, try again");
                 }
             }
-            if (isLoggedIn){
-                System.out.println("Successfully logged in");
-            }else {
-                System.out.println("There is no such user, try again");
-            }
-
-            return isLoggedIn;
+        }catch (Exception e){
+            System.out.println("Something went wrong");
         }
         return isLoggedIn;
     }

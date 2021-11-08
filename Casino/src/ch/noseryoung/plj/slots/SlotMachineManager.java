@@ -1,5 +1,6 @@
 package ch.noseryoung.plj.slots;
 
+import ch.noseryoung.plj.DatabaseConnection;
 import ch.noseryoung.plj.User;
 
 import java.util.HashMap;
@@ -14,7 +15,7 @@ public class SlotMachineManager {
 
     Random rand = new Random();
     IO_Slots io = new IO_Slots();
-    User user = new User();
+    User user;
 
     private int[] winningNums = new int[3];
     private HashMap<Integer, String> winningVals = new HashMap();
@@ -105,7 +106,7 @@ public class SlotMachineManager {
                 } else {
                     System.out.println("You lost this round");
                     System.out.println("You lost: " + money);
-                    user.setMoney(user.getMoney() + money);
+                    user.setMoney(user.getMoney() - money);
                     break;
                 }
             } catch (IndexOutOfBoundsException e){
